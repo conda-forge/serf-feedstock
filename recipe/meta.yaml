@@ -22,7 +22,7 @@ build:
   # cmake configuration here.
   #
   # Skipping both of these platforms for now.
-  skip: true  # [osx or win]
+  skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('serf', max_pin='x.x') }}
 
