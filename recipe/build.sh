@@ -7,4 +7,6 @@ scons APR="${PREFIX}" APU="${PREFIX}" \
     CFLAGS="$CFLAGS" \
     CPPFLAGS="$CPPFLAGS" LINKFLAGS="$LDFLAGS"
 
+scons check
+
 scons install
