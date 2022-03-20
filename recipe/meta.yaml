@@ -12,7 +12,7 @@ source:
     - SConstruct.patch
 
 build:
-  number: 0
+  number: 1
   # Mac OS X seems to have an issue in the upstream libapr
   # library where the package was generated thinking it had
   # access to <sys/types.h>, which I don't believe our current
@@ -49,8 +49,6 @@ test:
     - test -f ${PREFIX}/include/serf-1/serf.h       # [unix]
     - test -f ${PREFIX}/lib/libserf-1${SHLIB_EXT}   # [unix]
 
-    - conda inspect linkages -p ${PREFIX} serf  # [not win]
-    - conda inspect objects -p ${PREFIX} serf   # [osx]
 
 about:
   home: https://serf.apache.org/
