@@ -1,0 +1,24 @@
+diff -ruN serf-1.3.9-orig/build/check.py serf-1.3.9/build/check.py
+--- serf-1.3.9-orig/build/check.py	2015-09-17 14:46:24.000000000 +0200
++++ serf-1.3.9/build/check.py	2022-03-20 23:03:33.694429105 +0100
+@@ -52,16 +52,16 @@
+ 
+   # Find test responses and run them one by one
+   for case in glob.glob(testdir + "/testcases/*.response"):
+-    print "== Testing %s ==" % (case)
++    print("== Testing %s ==" % (case))
+     try:
+       subprocess.check_call([SERF_RESPONSE_EXE, case])
+     except subprocess.CalledProcessError:
+-      print "ERROR: test case %s failed" % (case)
++      print("ERROR: test case %s failed" % (case))
+       sys.exit(1)
+ 
+-  print "== Running the unit tests =="
++  print("== Running the unit tests ==")
+   try:
+     subprocess.check_call(TEST_ALL_EXE)
+   except subprocess.CalledProcessError:
+-    print "ERROR: test(s) failed in test_all"
++    print("ERROR: test(s) failed in test_all")
+     sys.exit(1)

@@ -12,6 +12,7 @@ source:
     - SConstruct.patch
     - serf.patch
     - err-get-func.patch
+    - python3.patch
 
 build:
   number: 2
