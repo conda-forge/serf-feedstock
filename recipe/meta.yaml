@@ -12,7 +12,7 @@ source:
     - SConstruct.patch
 
 build:
-  number: 1
+  number: 2
   # Mac OS X seems to have an issue in the upstream libapr
   # library where the package was generated thinking it had
   # access to <sys/types.h>, which I don't believe our current
