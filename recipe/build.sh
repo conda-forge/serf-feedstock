@@ -14,6 +14,6 @@ scons APR="${PREFIX}" APU="${PREFIX}" \
 # doesn't seem worthwhile at the moment.
 # See, for example, the patches debian uses:
 # https://sources.debian.org/patches/serf/1.3.9-10/
-# scons check
+scons check
 
 scons install
