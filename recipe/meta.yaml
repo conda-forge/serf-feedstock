@@ -13,6 +13,8 @@ source:
     - serf.patch
     - err-get-func.patch
     - python3.patch
+    # taken from debian at https://sources.debian.org/patches/serf/1.3.9-10/
+    - openssl-1.1.1i.patch
 
 build:
   number: 2
