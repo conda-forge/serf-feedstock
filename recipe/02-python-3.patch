@@ -1,0 +1,77 @@
+This patch has been modified for conda-forge since we already patch the SConstruct
+file in `SConstruct.patch`.
+
+From 5b78e2927401d2fdfcb9a7c832e8832ba657217f Mon Sep 17 00:00:00 2001
+From: James McCoy <jamessan@debian.org>
+Date: Sat, 14 May 2022 16:57:22 -0400
+Subject: py3-compat
+
+No DEP3 Subject or Description header found
+
+Gbp-Pq: py3-compat.
+---
+ SConstruct       | 10 ++++++----
+ build/check.py   | 10 ++++++----
+ build/gen_def.py | 11 ++++++-----
+ 3 files changed, 18 insertions(+), 13 deletions(-)
+
+diff --git a/build/check.py b/build/check.py
+index 2dacb4c..76945af 100755
+--- a/build/check.py
++++ b/build/check.py
+@@ -22,6 +22,8 @@
+ # ===================================================================
+ #
+ 
++from __future__ import print_function
++
+ import sys
+ import glob
+ import subprocess
+@@ -52,16 +54,16 @@ if __name__ == '__main__':
+ 
+   # Find test responses and run them one by one
+   for case in glob.glob(testdir + "/testcases/*.response"):
+-    print "== Testing %s ==" % (case)
++    print("== Testing %s ==" % (case))
+     try:
+       subprocess.check_call([SERF_RESPONSE_EXE, case])
+     except subprocess.CalledProcessError:
+-      print "ERROR: test case %s failed" % (case)
++      print("ERROR: test case %s failed" % (case))
+       sys.exit(1)
+ 
+-  print "== Running the unit tests =="
++  print("== Running the unit tests ==")
+   try:
+     subprocess.check_call(TEST_ALL_EXE)
+   except subprocess.CalledProcessError:
+-    print "ERROR: test(s) failed in test_all"
++    print("ERROR: test(s) failed in test_all")
+     sys.exit(1)
+diff --git a/build/gen_def.py b/build/gen_def.py
+index a2222d0..1e006ee 100755
+--- a/build/gen_def.py
++++ b/build/gen_def.py
+@@ -52,12 +52,13 @@ _types = re.compile(r'^extern const serf_bucket_type_t (serf_[a-z_]*);',
+ 
+ 
+ def extract_exports(fname):
+-  content = open(fname).read()
+   exports = [ ]
+-  for name in _funcs.findall(content):
+-    exports.append(name)
+-  for name in _types.findall(content):
+-    exports.append(name)
++  with open(fname) as fd:
++    content = fd.read()
++    for name in _funcs.findall(content):
++      exports.append(name)
++    for name in _types.findall(content):
++      exports.append(name)
+   return exports
+ 
+ # Blacklist the serf v2 API for now
+-- 
+cgit v1.1
+
