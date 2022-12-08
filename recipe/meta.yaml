@@ -10,9 +10,15 @@ source:
   sha256: 549c2d21c577a8a9c0450facb5cca809f26591f048e466552240947bdf7a87cc
   patches:
     - SConstruct.patch
+    # Patches from Ubuntu:
+    - 01-bucket-empty-list.patch
+    - 02-python-3.patch
+    - 03-openssl-111i.patch
+    - 04-openssl-3.patch
+    - 05-bio-ctrl.patch
 
 build:
-  number: 1
+  number: 2
   # Mac OS X seems to have an issue in the upstream libapr
   # library where the package was generated thinking it had
   # access to <sys/types.h>, which I don't believe our current

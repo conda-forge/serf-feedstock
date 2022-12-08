@@ -1,0 +1,45 @@
+From 0a8907b970cbf02992292fc542b1366a782df9f3 Mon Sep 17 00:00:00 2001
+From: James McCoy <jamessan@debian.org>
+Date: Sat, 14 May 2022 16:57:22 -0400
+Subject: Make serf_bucket_aggregate_prepend() behave properly when prepending
+ a bucket to an empty list
+
+Gbp-Pq: r1712790-serf_bucket_aggregate_prepend-empty-list.
+---
+ buckets/aggregate_buckets.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/buckets/aggregate_buckets.c b/buckets/aggregate_buckets.c
+index 952c7d4..cbd4082 100644
+--- a/buckets/aggregate_buckets.c
++++ b/buckets/aggregate_buckets.c
+@@ -154,6 +154,8 @@ void serf_bucket_aggregate_prepend(
+     new_list->bucket = prepend_bucket;
+     new_list->next = ctx->list;
+ 
++    if (ctx->list == NULL)
++        ctx->last = new_list;
+     ctx->list = new_list;
+ }
+ 
+@@ -283,6 +285,8 @@ static apr_status_t read_aggregate(serf_bucket_t *bucket,
+ 
+             /* If we have no more in our list, return EOF. */
+             if (!ctx->list) {
++                ctx->last = NULL;
++
+                 if (ctx->hold_open) {
+                     return ctx->hold_open(ctx->hold_open_baton, bucket);
+                 }
+@@ -395,6 +399,8 @@ static apr_status_t serf_aggregate_readline(serf_bucket_t *bucket,
+ 
+             /* If we have no more in our list, return EOF. */
+             if (!ctx->list) {
++                ctx->last = NULL;
++
+                 if (ctx->hold_open) {
+                     return ctx->hold_open(ctx->hold_open_baton, bucket);
+                 }
+-- 
+cgit v1.1
+
