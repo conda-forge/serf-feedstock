@@ -16,26 +16,16 @@ source:
     - 03-openssl-111i.patch
     - 04-openssl-3.patch
     - 05-bio-ctrl.patch
+    - SConstruct_win.patch  # [win]
 
 build:
   number: 2
-  # Mac OS X seems to have an issue in the upstream libapr
-  # library where the package was generated thinking it had
-  # access to <sys/types.h>, which I don't believe our current
-  # clang compilers have
-  #
-  # Windows was failing to link against OpenSSL with the custom
-  # cmake configuration here.
-  #
-  # Skipping both of these platforms for now.
-  skip: true  # [osx or win]
   run_exports:
     - {{ pin_subpackage('serf', max_pin='x.x') }}
 
 requirements:
   build:
     - {{ compiler('c') }}
-    - cmake  # [win]
   host:
     - openssl
     - libapr
@@ -49,8 +39,10 @@ requirements:
 
 test:
   commands:
+    - dir %LIBRARY_INC%  # [win]
+    - dir %LIBRARY_BIN%  # [win]
     - if not exist %LIBRARY_INC%\serf.h     exit 1  # [win]
-    - if not exist %LIBRARY_BIN%\serf-1.dll exit 1  # [win]
+    - if not exist %LIBRARY_BIN%\libserf-1.dll exit 1  # [win]
 
     - test -f ${PREFIX}/include/serf-1/serf.h       # [unix]
     - test -f ${PREFIX}/lib/libserf-1${SHLIB_EXT}   # [unix]
