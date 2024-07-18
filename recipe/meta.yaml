@@ -1,5 +1,5 @@
 {% set name = "serf" %}
-{% set version = "1.3.9" %}
+{% set version = "1.3.10" %}
 
 package:
   name: {{ name|lower }}
@@ -18,7 +18,7 @@ source:
     - 05-bio-ctrl.patch
 
 build:
-  number: 2
+  number: 0
   # Mac OS X seems to have an issue in the upstream libapr
   # library where the package was generated thinking it had
   # access to <sys/types.h>, which I don't believe our current
@@ -35,6 +35,7 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
     - cmake  # [win]
   host:
     - openssl
