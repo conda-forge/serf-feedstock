@@ -9,13 +9,7 @@ source:
   url: https://www.apache.org/dist/serf/serf-{{ version }}.tar.bz2
   sha256: be81ef08baa2516ecda76a77adf7def7bc3227eeb578b9a33b45f7b41dc064e6
   patches:
-    - SConstruct.patch
-    # Patches from Ubuntu:
-    - 01-bucket-empty-list.patch
-    - 02-python-3.patch
-    - 03-openssl-111i.patch
-    - 04-openssl-3.patch
-    - 05-bio-ctrl.patch
+    - 01-fix-build-new-dpkg.patch
 
 build:
   number: 0
