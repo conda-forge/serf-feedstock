@@ -12,7 +12,7 @@ source:
     - 01-fix-build-new-dpkg.patch
 
 build:
-  number: 0
+  number: 1
   # Mac OS X seems to have an issue in the upstream libapr
   # library where the package was generated thinking it had
   # access to <sys/types.h>, which I don't believe our current
@@ -22,7 +22,7 @@ build:
   # cmake configuration here.
   #
   # Skipping both of these platforms for now.
-  skip: true  # [osx or win]
+  skip: true  # [not (linux or osx)]
   run_exports:
     - {{ pin_subpackage('serf', max_pin='x.x') }}
 
@@ -30,7 +30,7 @@ requirements:
   build:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
-    - cmake  # [win]
+    - cmake
   host:
     - openssl
     - libapr
