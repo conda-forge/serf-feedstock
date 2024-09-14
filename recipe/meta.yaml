@@ -48,8 +48,8 @@ test:
     - if not exist %LIBRARY_INC%\serf.h     exit 1  # [win]
     - if not exist %LIBRARY_BIN%\serf-1.dll exit 1  # [win]
 
-    - test -f ${PREFIX}/include/serf-1/serf.h       # [unix]
-    - test -f ${PREFIX}/lib/libserf-1${SHLIB_EXT}   # [unix]
+    - test -f ${PREFIX}/include/serf-1/serf.h       # [unix or osx]
+    - test -f ${PREFIX}/lib/libserf-1${SHLIB_EXT}   # [unix or osx]
 
 
 about:
