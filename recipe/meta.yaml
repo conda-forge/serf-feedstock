@@ -31,13 +31,14 @@ requirements:
     - {{ compiler('c') }}
     - {{ stdlib("c") }}
     - cmake
+    - scons
   host:
     - openssl
     - libapr
     - libaprutil
     - zlib
-    - expat
     - scons
+    - expat
   run:
     - libapr
     - libaprutil
