@@ -25,10 +25,6 @@ build:
   skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('serf', max_pin='x.x') }}
-  script: 
-    - scons PREFIX=${PREFIX} OPENSSL=${PREFIX}
-    - {{ compiler('c') }}
-    - {{ stdlib('c') }}
 
 requirements:
   build:
