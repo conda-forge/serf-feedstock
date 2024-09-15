@@ -22,9 +22,13 @@ build:
   # cmake configuration here.
   #
   # Skipping both of these platforms for now.
-  skip: true  # [not (linux or osx)]
+  skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('serf', max_pin='x.x') }}
+  script: 
+    - scons PREFIX=${PREFIX} OPENSSL=${PREFIX}
+    - {{ compiler('c') }}
+    - {{ stdlib('c') }}
 
 requirements:
   build:
@@ -32,6 +36,8 @@ requirements:
     - {{ stdlib("c") }}
     - cmake
     - scons
+    - openssl
+    - pkg-config
   host:
     - openssl
     - libapr
@@ -42,6 +48,8 @@ requirements:
   run:
     - libapr
     - libaprutil
+    - openssl
+    - zlib
 
 test:
   commands:
