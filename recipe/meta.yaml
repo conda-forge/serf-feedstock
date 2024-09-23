@@ -9,6 +9,7 @@ source:
   url: https://www.apache.org/dist/serf/serf-{{ version }}.tar.bz2
   sha256: be81ef08baa2516ecda76a77adf7def7bc3227eeb578b9a33b45f7b41dc064e6
   patches:
+    - SConstruct.patch
     - 01-fix-build-new-dpkg.patch
 
 build:
@@ -28,12 +29,8 @@ build:
 
 requirements:
   build:
-    - {{ compiler('c') }}
+    - {{ compiler("c") }}
     - {{ stdlib("c") }}
-    - cmake
-    - scons
-    - openssl
-    - pkg-config
   host:
     - openssl
     - libapr
