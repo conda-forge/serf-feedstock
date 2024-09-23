@@ -1,5 +1,5 @@
 {% set name = "serf" %}
-{% set version = "1.3.9" %}
+{% set version = "1.3.10" %}
 
 package:
   name: {{ name|lower }}
@@ -7,25 +7,30 @@ package:
 
 source:
   url: https://www.apache.org/dist/serf/serf-{{ version }}.tar.bz2
-  sha256: 549c2d21c577a8a9c0450facb5cca809f26591f048e466552240947bdf7a87cc
+  sha256: be81ef08baa2516ecda76a77adf7def7bc3227eeb578b9a33b45f7b41dc064e6
   patches:
-    - SConstruct.patch
-    # Patches from Ubuntu:
-    - 01-bucket-empty-list.patch
-    - 02-python-3.patch
-    - 03-openssl-111i.patch
-    - 04-openssl-3.patch
-    - 05-bio-ctrl.patch
-    - SConstruct_win.patch  # [win]
+    - 01-fix-build-new-dpkg.patch
 
 build:
-  number: 2
+  number: 0
+  # Mac OS X seems to have an issue in the upstream libapr
+  # library where the package was generated thinking it had
+  # access to <sys/types.h>, which I don't believe our current
+  # clang compilers have
+  #
+  # Windows was failing to link against OpenSSL with the custom
+  # cmake configuration here.
+  #
+  # Skipping both of these platforms for now.
+  skip: false
   run_exports:
     - {{ pin_subpackage('serf', max_pin='x.x') }}
 
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib("c") }}
+    - cmake  # [win]
   host:
     - openssl
     - libapr
@@ -60,3 +65,4 @@ about:
 extra:
   recipe-maintainers:
     - scopatz
+    - rfiorella
