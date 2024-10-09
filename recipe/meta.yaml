@@ -9,10 +9,11 @@ source:
   url: https://www.apache.org/dist/serf/serf-{{ version }}.tar.bz2
   sha256: be81ef08baa2516ecda76a77adf7def7bc3227eeb578b9a33b45f7b41dc064e6
   patches:
+    - SConstruct.patch
     - 01-fix-build-new-dpkg.patch
 
 build:
-  number: 0
+  number: 1
   # Mac OS X seems to have an issue in the upstream libapr
   # library where the package was generated thinking it had
   # access to <sys/types.h>, which I don't believe our current
@@ -22,33 +23,38 @@ build:
   # cmake configuration here.
   #
   # Skipping both of these platforms for now.
-  skip: true  # [osx or win]
+  skip: true  # [win]
   run_exports:
     - {{ pin_subpackage('serf', max_pin='x.x') }}
 
 requirements:
   build:
-    - {{ compiler('c') }}
+    - {{ compiler("c") }}
     - {{ stdlib("c") }}
-    - cmake  # [win]
+    - openssl
+    - libapr
+    - libaprutil
+    - zlib
   host:
     - openssl
     - libapr
     - libaprutil
     - zlib
-    - expat
     - scons
+    - expat
   run:
     - libapr
     - libaprutil
+    - openssl
+    - zlib
 
 test:
   commands:
     - if not exist %LIBRARY_INC%\serf.h     exit 1  # [win]
     - if not exist %LIBRARY_BIN%\serf-1.dll exit 1  # [win]
 
-    - test -f ${PREFIX}/include/serf-1/serf.h       # [unix]
-    - test -f ${PREFIX}/lib/libserf-1${SHLIB_EXT}   # [unix]
+    - test -f ${PREFIX}/include/serf-1/serf.h       # [unix or osx]
+    - test -f ${PREFIX}/lib/libserf-1${SHLIB_EXT}   # [unix or osx]
 
 
 about:

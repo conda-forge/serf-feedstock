@@ -1,0 +1,11 @@
+--- SConstruct.old	2024-09-22 21:37:57
++++ SConstruct	2024-09-22 21:41:23
+@@ -165,6 +165,8 @@
+                   tools=('default', 'textfile',),
+                   CPPPATH=['.', ],
+                   )
++
++env.Append(ENV={'PATH': os.environ['PATH']})
+ 
+ env.Append(BUILDERS = {
+     'GenDef' : 
