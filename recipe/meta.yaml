@@ -35,13 +35,13 @@ requirements:
     - libapr
     - libaprutil
     - zlib
+    - scons
+    - expat
   host:
     - openssl
     - libapr
     - libaprutil
     - zlib
-    - scons
-    - expat
   run:
     - libapr
     - libaprutil
