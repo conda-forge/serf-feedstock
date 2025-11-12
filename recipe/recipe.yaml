@@ -13,7 +13,6 @@ source:
   sha256: be81ef08baa2516ecda76a77adf7def7bc3227eeb578b9a33b45f7b41dc064e6
   patches:
     - SConstruct.patch
-    - 01-fix-build-new-dpkg.patch
 
 build:
   # Mac OS X seems to have an issue in the upstream libapr
